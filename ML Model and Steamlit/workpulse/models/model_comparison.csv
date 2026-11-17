@@ -1,0 +1,8 @@
+r2,rmse,mae,model,cv_r2,best_params
+0.7229321776667226,0.9460999525517421,0.744681631367055,XGBoost,0.7274083812634409,"{'model__learning_rate': 0.08, 'model__max_depth': 5, 'model__n_estimators': 200, 'model__subsample': 0.9}"
+0.7216944109594174,0.9482108906689193,0.7465454195251316,GradientBoosting,0.7290081586644814,"{'model__learning_rate': 0.08, 'model__max_depth': 4, 'model__n_estimators': 150}"
+0.7209585907229286,0.9494635643883126,0.7486423402081763,LightGBM,0.7257824357080374,"{'model__learning_rate': 0.08, 'model__max_depth': 6, 'model__n_estimators': 200, 'model__num_leaves': 40}"
+0.7055503909673535,0.9753252462486979,0.7732739612106352,RandomForest,0.7149489682269964,"{'model__max_depth': 12, 'model__min_samples_leaf': 3, 'model__n_estimators': 150}"
+0.6751338317977694,1.0244628589358589,0.8179427460242251,KNN,0.6845750898659154,"{'model__n_neighbors': 15, 'model__weights': 'distance'}"
+0.6725204246325631,1.028575284114145,0.8245002714506744,Ridge,0.6851556854011501,{'model__alpha': 10.0}
+0.6725118147378302,1.0285888053645973,0.8244873437362045,LinearRegression,,{}
