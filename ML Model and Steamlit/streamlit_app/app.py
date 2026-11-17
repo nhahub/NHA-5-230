@@ -29,14 +29,16 @@ st.set_page_config(
 )
 
 # ── Fixed dark theme ─────────────────────────────────────────
-BG          = "#0f172a"
-CARD_BG     = "#1e293b"
-CARD_BORDER = "#334155"
-TEXT        = "#f1f5f9"
-MUTED       = "#94a3b8"
-ACCENT      = "#60a5fa"
-SIDEBAR_BG  = "linear-gradient(180deg, #020617 0%, #0f172a 100%)"
+BG          = "#0c2420"
+CARD_BG     = "#143b33"
+CARD_BORDER = "#245c4e"
+TEXT        = "#eef8f4"
+MUTED       = "#8fb5a8"
+ACCENT      = "#33d19a"
+SIDEBAR_BG  = "linear-gradient(180deg, #071a17 0%, #0c2420 100%)"
 PLOTLY_TPL  = "plotly_dark"
+GREEN_SCALE = ["#245c4e", "#2c9575", "#33d19a", "#aef0d6"]
+DIVERGING   = [[0.0, "#e76f51"], [0.5, "#e6f4ee"], [1.0, "#33d19a"]]
 KPI_SHADOW  = "0 4px 16px rgba(0,0,0,0.35)"
 
 st.html(
@@ -135,7 +137,7 @@ st.html(
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] label,
     [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {{
-        color: #e2e8f0 !important;
+        color: #e6f4ee !important;
     }}
     [data-testid="stSidebar"] [class*="st-key-nav_"] button {{
         width: 100%;
@@ -143,23 +145,23 @@ st.html(
         justify-content: flex-start !important;
         text-align: left !important;
         border-radius: 11px !important;
-        border: 1px solid rgba(148,163,184,0.24) !important;
+        border: 1px solid rgba(143,181,168,0.24) !important;
         background: rgba(255,255,255,0.055) !important;
-        color: #e2e8f0 !important;
+        color: #e6f4ee !important;
         padding: 0.55rem 0.85rem !important;
         margin: 0.12rem 0 !important;
         transition: all 0.16s ease;
     }}
     [data-testid="stSidebar"] [class*="st-key-nav_"] button:hover {{
         border-color: {ACCENT} !important;
-        background: rgba(96,165,250,0.16) !important;
+        background: rgba(51,209,154,0.16) !important;
         transform: translateX(2px);
     }}
     [data-testid="stSidebar"] [class*="st-key-nav_"] button[kind="primary"] {{
         background: {ACCENT} !important;
         border-color: {ACCENT} !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 12px rgba(59,130,246,0.22);
+        box-shadow: 0 4px 12px rgba(44,149,117,0.30);
     }}
     [data-testid="stSidebar"] [class*="st-key-nav_"] button[kind="primary"] * {{
         color: #ffffff !important;
@@ -233,9 +235,9 @@ def kpi(icon: str, value: str, label: str) -> str:
 
 
 def apply_layout(fig, height=400):
-    axis_text = "#e2e8f0"
-    axis_muted = "#cbd5e1"
-    grid = "#334155"
+    axis_text = "#e6f4ee"
+    axis_muted = "#bfe0d3"
+    grid = "#245c4e"
     fig.update_layout(
         template=PLOTLY_TPL,
         height=height,
@@ -270,9 +272,9 @@ with st.sidebar:
     st.markdown(
         """
         <div style="text-align:center; padding: 0.6rem 0 1rem 0;">
-            <i class="fa-solid fa-bolt" style="font-size:2.1rem; color:#60a5fa;"></i>
+            <i class="fa-solid fa-bolt" style="font-size:2.1rem; color:#33d19a;"></i>
             <h2 style="margin:0.4rem 0 0 0; color:white; font-size:1.25rem;">Productivity</h2>
-            <p style="margin:0; font-size:0.72rem; color:#94a3b8;">Expected Score Predictor</p>
+            <p style="margin:0; font-size:0.72rem; color:#8fb5a8;">Expected Score Predictor</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -311,7 +313,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(
         """
-        <div style="font-size:0.72rem; color:#64748b; padding:0.8rem 0.4rem 0;">
+        <div style="font-size:0.72rem; color:#5f8f80; padding:0.8rem 0.4rem 0;">
         Survey lifestyle signals<br>
         Expected productivity view
         </div>
@@ -360,7 +362,7 @@ if page == "Overview":
         section("fa-briefcase", "Records by job type")
         jc = df["job_type"].value_counts().reset_index()
         jc.columns = ["job_type", "count"]
-        fig = px.bar(jc, x="job_type", y="count", color="count", color_continuous_scale="Blues")
+        fig = px.bar(jc, x="job_type", y="count", color="count", color_continuous_scale=GREEN_SCALE)
         fig = apply_layout(fig, 360)
         fig.update_layout(coloraxis_showscale=False, xaxis_title="", yaxis_title="Count")
         st.plotly_chart(fig, use_container_width=True)
@@ -370,7 +372,7 @@ if page == "Overview":
     pc.columns = ["platform", "count"]
     fig = px.pie(
         pc, names="platform", values="count", hole=0.45,
-        color_discrete_sequence=["#0b3c78", "#145da0", "#1976b9", "#268bd2", "#5aa9e6", "#8ecae6"],
+        color_discrete_sequence=["#1f6b58", "#2c846c", "#2c9575", "#33d19a", "#6fe0b8", "#aef0d6"],
     )
     fig = apply_layout(fig, 380)
     st.plotly_chart(fig, use_container_width=True)
@@ -398,7 +400,7 @@ elif page == "Exploratory Insights":
     with c2:
         section("fa-clock", "Work hours per day")
         fig = px.histogram(df, x="work_hours_per_day", nbins=16)
-        fig.update_traces(marker_color="#5aa9e6")
+        fig.update_traces(marker_color="#6fe0b8")
         fig = apply_layout(fig, 340)
         st.plotly_chart(fig, use_container_width=True)
 
@@ -406,7 +408,7 @@ elif page == "Exploratory Insights":
     sc = df["stress_level"].value_counts().sort_index().reset_index()
     sc.columns = ["stress_level", "count"]
     fig = px.bar(sc, x="stress_level", y="count")
-    fig.update_traces(marker_color="#268bd2")
+    fig.update_traces(marker_color="#33d19a")
     fig = apply_layout(fig, 360)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -414,7 +416,7 @@ elif page == "Exploratory Insights":
     gc = df["gender"].value_counts().reset_index()
     gc.columns = ["gender", "count"]
     fig = px.pie(gc, names="gender", values="count", hole=0.4,
-                 color_discrete_sequence=["#145da0", "#5aa9e6", "#8ecae6"])
+                 color_discrete_sequence=["#2c846c", "#6fe0b8", "#aef0d6"])
     fig = apply_layout(fig, 360)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -435,7 +437,7 @@ elif page == "Correlations":
     corr = df[num_cols].corr()[TARGET].drop(TARGET).sort_values()
     fig = px.bar(
         x=corr.values, y=corr.index, orientation="h",
-        color=corr.values, color_continuous_scale="RdBu_r",
+        color=corr.values, color_continuous_scale=DIVERGING,
         labels={"x": f"Correlation with {TARGET_DISPLAY}", "y": ""},
     )
     fig = apply_layout(fig, 520)
@@ -445,7 +447,7 @@ elif page == "Correlations":
     section("fa-table-cells", "Numeric correlation heatmap")
     cols = [c for c in num_cols if c != TARGET][:12] + [TARGET]
     cm = df[cols].corr()
-    fig = px.imshow(cm, color_continuous_scale="RdBu_r", zmin=-1, zmax=1, aspect="auto")
+    fig = px.imshow(cm, color_continuous_scale=DIVERGING, zmin=-1, zmax=1, aspect="auto")
     fig = apply_layout(fig, 520)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -473,7 +475,7 @@ elif page == "Job & Platform":
         plat = df.groupby("social_platform_preference")[TARGET].mean().sort_values().reset_index()
         fig = px.bar(
             plat, x=TARGET, y="social_platform_preference", orientation="h",
-            color=TARGET, color_continuous_scale="Blues",
+            color=TARGET, color_continuous_scale=GREEN_SCALE,
         )
         fig = apply_layout(fig, 400)
         fig.update_layout(coloraxis_showscale=False, xaxis_title="Mean productivity", yaxis_title="")
@@ -523,7 +525,7 @@ elif page == "Digital Habits":
         sc = df["screen_time_before_sleep"].value_counts().sort_index().reset_index()
         sc.columns = ["hours", "count"]
         fig = px.bar(sc, x="hours", y="count")
-        fig.update_traces(marker_color="#5aa9e6")
+        fig.update_traces(marker_color="#6fe0b8")
         fig = apply_layout(fig, 340)
         st.plotly_chart(fig, use_container_width=True)
 
@@ -533,7 +535,7 @@ elif page == "Digital Habits":
         tmp = df.groupby("uses_focus_apps")[TARGET].mean().reset_index()
         tmp["uses_focus_apps"] = tmp["uses_focus_apps"].map({0: "No", 1: "Yes", False: "No", True: "Yes"})
         fig = px.bar(tmp, x="uses_focus_apps", y=TARGET, color="uses_focus_apps",
-                     color_discrete_sequence=["#64748b", ACCENT])
+                     color_discrete_sequence=["#5f8f80", ACCENT])
         fig = apply_layout(fig, 320)
         fig.update_layout(showlegend=False, xaxis_title="", yaxis_title=f"Mean {TARGET_DISPLAY}")
         st.plotly_chart(fig, use_container_width=True)
@@ -545,7 +547,7 @@ elif page == "Digital Habits":
         )
         fig = px.bar(tmp, x="has_digital_wellbeing_enabled", y=TARGET,
                      color="has_digital_wellbeing_enabled",
-                     color_discrete_sequence=["#64748b", ACCENT])
+                     color_discrete_sequence=["#5f8f80", ACCENT])
         fig = apply_layout(fig, 320)
         fig.update_layout(showlegend=False, xaxis_title="", yaxis_title=f"Mean {TARGET_DISPLAY}")
         st.plotly_chart(fig, use_container_width=True)
@@ -581,7 +583,7 @@ elif page == "Wellbeing":
         columns="work_hours_per_day", aggfunc="mean",
     )
     fig = px.imshow(
-        pivot, aspect="auto", color_continuous_scale="YlOrRd_r",
+        pivot, aspect="auto", color_continuous_scale=GREEN_SCALE[::-1],
         labels=dict(color=f"Mean {TARGET_DISPLAY}"),
     )
     fig = apply_layout(fig, 420)
@@ -672,7 +674,7 @@ elif page == "Recommendations":
     )
 
     cards = [
-        ("fa-bed", "#38bdf8", "Protect sleep and offline time",
+        ("fa-bed", "#4ad8a8", "Protect sleep and offline time",
          "People with more sleep and weekly offline hours tend to report higher productivity. Encourage clear offline blocks and a consistent sleep window."),
         ("fa-brain", "#f87171", "Treat sustained stress as a priority",
          "High stress and frequent burnout days line up with lower scores. Short check-ins and workload reviews help before performance drops further."),
@@ -682,7 +684,7 @@ elif page == "Recommendations":
          "Respondents who use focus apps or digital wellbeing settings show a modest edge. Offer optional tooling rather than mandates."),
         ("fa-briefcase", "#fbbf24", "Segment support by job context",
          "Average scores differ across job types. Coaching and workload policies work better when they respect those differences instead of a single blanket rule."),
-        ("fa-comments", "#60a5fa", "Close the perception gap",
+        ("fa-comments", "#33d19a", "Close the perception gap",
          "Perceived productivity tracks actual scores but not perfectly. Pair self-ratings with simple outcome measures so teams do not optimise for feeling busy only."),
     ]
     for icon, color, title, body in cards:
