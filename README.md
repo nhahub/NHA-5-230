@@ -35,7 +35,6 @@ MONTIG looks at how social media habits relate to productivity, sleep, stress an
 └── Final Presentation.pptx
 ```
 
-> If `~$Final Presentation.pptx` is still in the repo, delete it. It is a temporary lock file that PowerPoint creates while the real file is open, and it should never be committed. Upload the actual presentation instead. The `.gitignore` in this folder keeps these files out from now on.
 
 ## Team
 
@@ -116,8 +115,6 @@ python -m src.train
 This reads `data/productivity_dataset.csv`, tries seven models (Linear Regression, Ridge, KNN, Random Forest, Gradient Boosting, XGBoost, LightGBM) with a grid search each, and writes three files into `models/`: `best_model.joblib`, `model_comparison.csv` and `meta.json`. It also writes `data/cleaned.csv`, which the app reads.
 
 The saved model is a full scikit-learn pipeline. It includes the preprocessing (imputation, scaling, one-hot encoding), so you can pass it the raw columns directly.
-
-> A `.joblib` file only loads reliably with the same scikit-learn version that saved it. If you retrain, keep your own `requirements.txt` in sync with the version you trained with.
 
 ### 4. Streamlit app
 
