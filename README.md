@@ -116,8 +116,6 @@ This reads `data/productivity_dataset.csv`, tries seven models (Linear Regressio
 
 The saved model is a full scikit-learn pipeline. It includes the preprocessing (imputation, scaling, one-hot encoding), so you can pass it the raw columns directly.
 
-> A `.joblib` file only loads reliably with the same scikit-learn version that saved it. If you retrain, keep your own `requirements.txt` in sync with the version you trained with.
-
 ### 4. Streamlit app
 
 #### Run it on your own machine
