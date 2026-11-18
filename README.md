@@ -35,7 +35,6 @@ MONTIG looks at how social media habits relate to productivity, sleep, stress an
 └── Final Presentation.pptx
 ```
 
-> If `~$Final Presentation.pptx` is still in the repo, delete it. It is a temporary lock file that PowerPoint creates while the real file is open, and it should never be committed. Upload the actual presentation instead. The `.gitignore` in this folder keeps these files out from now on.
 
 ## Team
 
